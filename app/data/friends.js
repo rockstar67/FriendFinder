@@ -1,4 +1,4 @@
-var friendsArray = [
+var friends = [
     {
         "name": "Marky Ramone",
         "photo": "https://www.google.com/imgres?imgurl=http%3A%2F%2Fwww.rockapedia.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fthreshold-1382%2Fpublic%2Fbiography%2Fpaste_1434056195.png%3Fitok%3DAFTz6hs4&imgrefurl=http%3A%2F%2Fwww.rockapedia.com%2Fbiography%2Fmarky-ramone%2Fdiscography-filmography&tbnid=z6E4wMn41gjpkM&vet=12ahUKEwihybuLgLfoAhXCA50JHROnCdoQMygMegUIARDqAQ..i&docid=FMEBGpmY_vNzsM&w=754&h=800&q=marky%20ramone%20png&ved=2ahUKEwihybuLgLfoAhXCA50JHROnCdoQMygMegUIARDqAQ",
@@ -41,4 +41,4 @@ var friendsArray = [
     }
 ]
 
-module.exports = friendsArray;
+module.exports = friends;
