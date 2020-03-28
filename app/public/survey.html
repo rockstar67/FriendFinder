@@ -172,11 +172,10 @@
 
     <script type="text/javascript">
         //Capture inputs
-        $('#submit').on('click', (event)=>{
-            //console.log("button clicked");
-            event.preventDefault();
+        $('#submit').on('click', function(){
             
-            validateForm =()=>{
+            
+        function validateForm () {
                 //validate input forms
                 var isValid = true;
                 $('.form-control').each(function(){
@@ -212,25 +211,11 @@
                     ]
                 };
                 
-                //AJAX post call
-                $.ajax({
-                    method: "POST", 
-                    url: "/api/friends",
-                    headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json"
-                    },
-                    data: JSON.stringify(userData)
-                }).then(data=>{
-                    console.log(data);
-                    $("#match-name").text(data.name);
-                    $("#match-img").attr("src",data.photo);
-                    $("#results-modal").modal("toggle");
-                });
-            }
-            else{
-                console.log("please fill out all fields");
-            }
+                var currentURL = window.location.origin;
+
+                $.post(currentURL + "/api/friends", userData, function(data) {
+                    alert("working");
+                
         });
     </script>
 </body>
