@@ -5,12 +5,14 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
-    </script>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+        integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
+        integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.css">
 
     <title>FriendFinder</title>
 </head>
@@ -117,7 +119,8 @@
         </select>
 
         <h3><strong>Question 9</strong></h3>
-        <h4>You think that everyone's views should be respected regardless of whether they are supported by facts or not.</h4>
+        <h4>You think that everyone's views should be respected regardless of whether they are supported by facts or
+            not.</h4>
         <select data-placeholder="" class="chosen-select" id="q9">
             <option value=""></option>
             <option value="1">1 (Strongly Disagree)</option>
@@ -146,11 +149,12 @@
             <h4>Submit</h4>
         </button>
         <hr>
-            
+
     </div>
-    
+
     <!-- Modal -->
-    <div class="modal fade" id="results-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="results-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -169,30 +173,41 @@
             </div>
         </div>
     </div>
-
+    
     <script type="text/javascript">
+    var config = {
+        ".chosen-select": {},
+        ".chosen-select-deselect": { allow_single_deselect: true },
+        ".chosen-select-no-single": { disable_search_threshold: 10 },
+        ".chosen-select-no-results": { no_results_text: "Oops, nothing found!" },
+        ".chosen-select-width": { width: "95%" }
+    };
+
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+    
         //Capture inputs
-        $('#submit').on('click', function(){
-            
-            
-        function validateForm () {
+        $('#submit').on('click', function () {
+
+            function validateForm() {
                 //validate input forms
                 var isValid = true;
-                $('.form-control').each(function(){
-                    if($(this).val()===""){
+                $('.form-control').each(function () {
+                    if ($(this).val() === "") {
                         isValid = false;
                     }
                 });
 
-                $('.chosen-select').each(function(){
-                    if ($(this).val() ===""){
+                $('.chosen-select').each(function () {
+                    if ($(this).val() === "") {
                         isValid = false;
                     }
                 });
                 return isValid;
             }
 
-            if(validateForm()){
+            if (validateForm()) {
                 //build object of user inputs
                 var userData = {
                     name: $('#name').val(),
@@ -210,13 +225,25 @@
                         $('#q10').val(),
                     ]
                 };
-                
+
                 var currentURL = window.location.origin;
 
-                $.post(currentURL + "/api/friends", userData, function(data) {
-                    alert("working");
-                
+                $.post(currentURL + "/api/friends", userData, function (data) {
+
+                    $("#matchName").text(data.name);
+                    $("#matchImg").attr("src", data.photo);
+
+                    $("#resultsModa").modal("toggle");
+
+                });
+            }
+            else {
+                alert("Please fill out all fields before submitting!");
+            }
+
+            return false;
         });
     </script>
 </body>
+
 </html>
